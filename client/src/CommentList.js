@@ -1,9 +1,15 @@
 import React from 'react';
 
 const CommentList = ({ comments }) => {
-  const renderedComments = comments.map(comment => {
-    return <li key={comment.id}>
-      {comment.content}
+  const renderedComments = comments.map(({ id, status, content }) => {
+    const value = status === 'approved'
+      ? content
+      : status === 'rejected'
+        ? 'Comment is rejected'
+        : 'Comment is pending for approval';
+
+    return <li key={id}>
+      {value}
     </li>
   });
 
