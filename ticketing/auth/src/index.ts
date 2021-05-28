@@ -1,6 +1,7 @@
 
 import { json } from 'body-parser';
 import express from 'express';
+import mongoose from 'mongoose';
 import 'express-async-errors';
 import { signinRouter } from './routes/signin';
 import { signupRouter } from './routes/signup';
@@ -23,7 +24,22 @@ app.get('*', async () => {
 
 app.use(errorHandler);
 
-app.listen(3000, () => {
-    console.log('v4')
-    console.log('AUTH: Listening on 3000');
-});
+const start = async () => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        });
+        console.log('Connected to mongoDb');
+    } catch (err) {
+        console.log(err);
+    }
+
+    app.listen(3000, () => {
+        console.log('v2')
+        console.log('AUTH: Listening on 3000');
+    }); 
+}
+
+start();
