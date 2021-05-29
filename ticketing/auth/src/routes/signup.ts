@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
-import usersService from '../services/user-service';
+import { UsersService } from '../services/user-service';
 import { RequestValidationError } from '../errors/request-validation-error'
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post('/api/users/signup', [
     const { email, password } = req.body;
     
     try {
-        const user = await usersService.createUser({ email, password });
+        const user = await UsersService.createUser({ email, password });
         res.status(201).json( user );
     } catch (error) {
         throw error;
