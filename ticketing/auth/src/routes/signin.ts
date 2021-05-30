@@ -13,11 +13,11 @@ router.post('/api/users/signin', [
 ], validateRequest, async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const existingUser = await UsersService.getUserByEmail(email);
-    
+
     if (!existingUser) throw new BadRequestError('Invalid credentials');
 
-    const passwordsMatch = await Password.compare(password, existingUser.password);
-    
+    const passwordsMatch = await Password.compare(existingUser.password, password);
+
     if (!passwordsMatch) throw new BadRequestError('Invalid credentials');
 
     // Generate JWT
@@ -26,7 +26,7 @@ router.post('/api/users/signin', [
             id: existingUser.id,
             email: existingUser.email,
         },
-        process.env.JWT_TOKEN!,
+        process.env.JWT_KEY!,
     );
 
     // Store in Session object
