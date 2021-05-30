@@ -13,6 +13,10 @@ export class UsersService {
         return user; 
     }
 
+    static async getUserByEmail(email: string): Promise<UserDoc | null> {
+        return User.findOne({ email });
+    }
+
     // Only for test porpuse.
     static async getUsers(): Promise<UserDoc[]> {
         const users: UserDoc[] | null = await User.find();

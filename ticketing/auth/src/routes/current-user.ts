@@ -1,14 +1,10 @@
 import express from 'express';
-const router = express.Router();
-import { UsersService } from '../services/user-service';
+import { currentUser } from '../middlewares/current-user';
 
-router.get('/api/users/currentuser', async (req, res) => {
-    try {
-        const users = await UsersService.getUsers();
-        res.status(200).json( users );
-    } catch (error) {
-        throw error;
-    }
+const router = express.Router();
+
+router.get('/api/users/currentuser', currentUser, async (req, res) => {
+    res.send({ currentUser: req.currentUser });
 });
 
 export { router as currentUserRouter };
