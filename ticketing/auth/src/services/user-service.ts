@@ -1,6 +1,6 @@
 import { User } from '../models/user'
 import { UserAttrs, UserDoc } from '../models/user.interface';
-import { ResourseConflictError } from '../errors/resourse-conflict-error';
+import { ResourseConflictError } from '@az-tickets/common';
 
 export class UsersService {
     static async createUser({ email, password }: UserAttrs): Promise<UserDoc> {

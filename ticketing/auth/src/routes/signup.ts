@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { UsersService } from '../services/user-service';
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest } from '@az-tickets/common';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();

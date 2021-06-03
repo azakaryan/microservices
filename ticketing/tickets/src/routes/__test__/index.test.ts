@@ -1,0 +1,23 @@
+import request from 'supertest';
+import { app } from '../../app';
+import { signin } from '../../test/auth-helper'; 
+
+const createTicket = (): Promise<any> => {
+    return request(app)
+        .post('/api/tickets')
+        .set('Cookie', signin())
+        .send({ title: 'Title 1', price: 10 });
+}
+
+it ('can fetch a list of tickets', async () => {
+    await createTicket();
+    await createTicket();
+    await createTicket(); 
+
+    const response = await request(app)
+        .get('/api/tickets')
+        .send()
+        .expect(200);
+
+    expect(response.body.length).toEqual(3);
+});

@@ -1,3 +1,6 @@
 **/node_modules
 
+# This is common module published to npm
+common
+
 .idea/

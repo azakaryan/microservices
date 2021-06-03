@@ -1,9 +1,8 @@
 import express, { Request, Response }  from 'express';
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest, BadRequestError } from '@az-tickets/common';
 const router = express.Router();
 import { body } from 'express-validator';
 import { UsersService } from '../services/user-service';
-import { BadRequestError } from '../errors/bad-request-error';
 import { Password } from '../services/password';
 import jwt from 'jsonwebtoken';
 
