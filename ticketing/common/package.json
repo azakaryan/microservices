@@ -1,6 +1,6 @@
 {
-  "name": "@azakaryan/common",
-  "version": "1.0.16",
+  "name": "@az-tickets/common",
+  "version": "1.0.8",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
