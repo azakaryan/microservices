@@ -113,4 +113,23 @@ it ('returns created order when reserves a ticket', async () => {
    expect(order.body.status).toEqual(OrderStatus.Created);   
 });
 
-it.todo('emits an order created event');
+it ('emits an order created event', async () => {
+  const orders = await Order.find({});
+  expect(orders.length).toEqual(0);
+
+  const ticket = Ticket.build({
+    title: 'Title',
+    price: 20,
+  });
+  await ticket.save();
+
+  await request(app)
+      .post('/api/orders')
+      .set('Cookie', signin())
+      .send({ 
+        ticketId: ticket.id
+      })
+      .expect(201);
+  
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

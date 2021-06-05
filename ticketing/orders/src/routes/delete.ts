@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import { NotAuthorizedError, NotFoundError, OrderStatus, requireAuth } from '@az-tickets/common';
 import { Order } from '../models/order';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -14,13 +16,13 @@ router.delete('/api/orders/:id', requireAuth, async (req: Request, res: Response
     order.status = OrderStatus.Cancelled;
     await order.save();
 
-    // Publish event order is canceled
-    // new TicketCreatedPublisher(natsWrapper.client).publish({
-    //     id: ticket.id,
-    //     title: ticket.title,
-    //     price: ticket.price,
-    //     userId: ticket.userId,
-    // });
+    // Publish event order is cancelled.
+    new OrderCancelledPublisher(natsWrapper.client).publish({
+        id: order.id,
+        ticket: {
+            id: order.ticket.id,
+        }
+    });
 
     res.status(200).send(order);
 });

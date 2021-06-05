@@ -3,6 +3,7 @@ import { app } from '../../app';
 import { signin } from '../../test/auth-helper';
 import { Ticket } from '../../models/ticket';
 import { OrderStatus } from '@az-tickets/common';
+import { natsWrapper } from '../../nats-wrapper';
 
 const createOrder = async (cookie: string[], ticketId: string) => {
   return request(app)
@@ -23,25 +24,6 @@ const createTicket = async () => {
 
   return ticket;
 }
-
-it ('returns 200 and updates order status to "Canceled" for a particular user', async () => {
-  const cookie = signin();
-  
-  // Create a tickets
-  const ticket = await createTicket();
-
-  // Create an order.
-  const { body: userOrder } = await createOrder(cookie, ticket.id);
-
-  // Fetch orders for user #1
-  const { body: updatedOrder } = await request(app)
-    .delete(`/api/orders/${userOrder.id}`)
-    .set('Cookie', cookie)
-    .send({})
-    .expect(200);
-
-  expect(updatedOrder.status).toEqual(OrderStatus.Cancelled);
-});
 
 it ('returns 401 if not authorised', async () => {
   const cookie = signin();
@@ -76,4 +58,40 @@ it ('returns 401 when one user tries to fetch order of another user', async () =
     .expect(401);
 });
 
-it.todo('emits an order cancneled event');
+it ('returns 200 and updates order status to "Canceled" for a particular user', async () => {
+  const cookie = signin();
+  
+  // Create a tickets
+  const ticket = await createTicket();
+
+  // Create an order.
+  const { body: userOrder } = await createOrder(cookie, ticket.id);
+
+  // Fetch orders for user #1
+  const { body: updatedOrder } = await request(app)
+    .delete(`/api/orders/${userOrder.id}`)
+    .set('Cookie', cookie)
+    .send({})
+    .expect(200);
+
+  expect(updatedOrder.status).toEqual(OrderStatus.Cancelled);
+});
+
+it ('emits an order cancneled event', async () => {
+  const cookie = signin();
+  
+  // Create a tickets
+  const ticket = await createTicket();
+
+  // Create an order.
+  const { body: userOrder } = await createOrder(cookie, ticket.id);
+
+  // Fetch orders for user #1
+  const { body: updatedOrder } = await request(app)
+    .delete(`/api/orders/${userOrder.id}`)
+    .set('Cookie', cookie)
+    .send({})
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

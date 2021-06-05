@@ -88,7 +88,7 @@ it ('creates a ticket with valid inputs', async () => {
 });
 
 it ('publishes an event', async () => {
-    let tickets = await Ticket.find({});
+    const tickets = await Ticket.find({});
 
     expect(tickets.length).toEqual(0);
 
