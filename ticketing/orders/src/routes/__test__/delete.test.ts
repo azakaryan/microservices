@@ -4,6 +4,7 @@ import { signin } from '../../test/auth-helper';
 import { Ticket } from '../../models/ticket';
 import { OrderStatus } from '@az-tickets/common';
 import { natsWrapper } from '../../nats-wrapper';
+import { Types } from 'mongoose';
 
 const createOrder = async (cookie: string[], ticketId: string) => {
   return request(app)
@@ -16,6 +17,7 @@ const createOrder = async (cookie: string[], ticketId: string) => {
 
 const createTicket = async () => {
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'Title',
     price: 20,
   });

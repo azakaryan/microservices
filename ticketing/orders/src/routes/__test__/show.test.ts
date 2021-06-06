@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { signin } from '../../test/auth-helper';
 import { Ticket } from '../../models/ticket';
+import { Types } from 'mongoose';
 
 const createOrder = async (cookie: string[], ticketId: string) => {
   return request(app)
@@ -14,6 +15,7 @@ const createOrder = async (cookie: string[], ticketId: string) => {
 
 const createTicket = async () => {
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'Title',
     price: 20,
   });

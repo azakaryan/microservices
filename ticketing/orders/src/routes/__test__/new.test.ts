@@ -58,6 +58,7 @@ it ('returns 404 if ticket does not found', async () => {
 
 it ('returns 400 if ticket is already reserved', async () => {
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'Title',
     price: 20,
   });
@@ -81,6 +82,7 @@ it ('returns 400 if ticket is already reserved', async () => {
 
 it ('reserves a ticket', async () => {      
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'Title',
     price: 20,
   });
@@ -97,6 +99,7 @@ it ('reserves a ticket', async () => {
 
 it ('returns created order when reserves a ticket', async () => {      
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'Title',
     price: 20,
   });
@@ -118,6 +121,7 @@ it ('emits an order created event', async () => {
   expect(orders.length).toEqual(0);
 
   const ticket = Ticket.build({
+    id: Types.ObjectId().toHexString(),
     title: 'Title',
     price: 20,
   });
