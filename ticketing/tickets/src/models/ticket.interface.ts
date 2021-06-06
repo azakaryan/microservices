@@ -13,6 +13,10 @@ export interface TicketModel extends Model<TicketDoc> {
 }
 
 // An interface that describes the properties that Ticket document has.
-export interface TicketDoc extends Document, TicketAttrs {
+export interface TicketDoc extends Document {
+    title: string;
+    price: number;
+    userId: string;
     version: number;
+    orderId?: string;
 }

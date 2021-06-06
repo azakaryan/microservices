@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedLstener } from './events/listeners/order-created-listener';
+import { OrderCancelledLstener } from './events/listeners/order-cancelled-listener'
 
 const start = async () => {
     if (!process.env.JWT_KEY) throw new Error('JWT_KEY must be defined');
@@ -21,6 +23,9 @@ const start = async () => {
         });
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
+
+        new OrderCreatedLstener(natsWrapper.client).listen();
+        new OrderCancelledLstener(natsWrapper.client).listen();
     
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,

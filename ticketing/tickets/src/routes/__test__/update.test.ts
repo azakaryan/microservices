@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { app } from '../../app';
 import { signin } from '../../test/auth-helper'; 
 import { natsWrapper } from '../../nats-wrapper';
+import { Ticket } from '../../models/ticket';
 
 it ('return 404 if provided id does not exist', async () => {
     const id = Types.ObjectId().toHexString();
@@ -95,6 +96,28 @@ it ('return 400 if user provides an invalid price', async () => {
             title: 'newTitle',
         })
         .expect(400);    
+});
+
+it ('return 400 if ticket is reserved', async () => {
+    const cookie = signin();
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({ title: 'Title 1', price: 10 });;
+
+    // Set orderId of the ticket directly in database.    
+    const ticket = await Ticket.findById(response.body.id);
+    ticket!.set({ orderId: Types.ObjectId().toHexString() });
+    await ticket!.save();
+
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            title: 'newTitle',
+            price: 40,
+        })
+        .expect(400); 
 });
 
 it ('return 200 when valid input is provided', async () => {
