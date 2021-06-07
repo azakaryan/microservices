@@ -2,7 +2,7 @@ import { Listener, NotFoundError, Subjects, OrderCancelledEvent } from '@az-tick
 import { Ticket } from '../../models/ticket';
 import { queueGroupName } from './queue-group-name';
 import { Message } from 'node-nats-streaming';
-import { TicketUpdatedPublisher } from '../publishers/ticket-updated-publisher';0
+import { TicketUpdatedPublisher } from '../publishers/ticket-updated-publisher';
 
 export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
   readonly subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
