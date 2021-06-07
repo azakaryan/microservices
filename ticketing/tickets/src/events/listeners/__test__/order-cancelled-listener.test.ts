@@ -1,4 +1,4 @@
-import { OrderCancelledLstener } from '../order-cancelled-listener';
+import { OrderCancelledListener } from '../order-cancelled-listener';
 import { natsWrapper } from '../../../nats-wrapper';
 import { Types } from 'mongoose';
 import { OrderCancelledEvent, Subjects, TicketUpdatedEvent } from '@az-tickets/common';
@@ -8,7 +8,7 @@ import { Ticket } from '../../../models/ticket';
 
 const setup = async() => {
   // create an isntance of listener
-  const listener = new OrderCancelledLstener(natsWrapper.client);
+  const listener = new OrderCancelledListener(natsWrapper.client);
 
   // create and save a ticket
   const orderId = Types.ObjectId().toHexString();

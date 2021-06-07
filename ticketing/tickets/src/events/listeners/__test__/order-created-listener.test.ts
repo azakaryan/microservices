@@ -1,4 +1,4 @@
-import { OrderCreatedLstener } from '../order-created-listener';
+import { OrderCreatedListener } from '../order-created-listener';
 import { natsWrapper } from '../../../nats-wrapper';
 import { Types } from 'mongoose';
 import { OrderCreatedEvent, OrderStatus, Subjects, TicketUpdatedEvent } from '@az-tickets/common';
@@ -8,7 +8,7 @@ import { Ticket } from '../../../models/ticket';
 
 const setup = async() => {
   // create an isntance of listener
-  const listener = new OrderCreatedLstener(natsWrapper.client);
+  const listener = new OrderCreatedListener(natsWrapper.client);
 
   // create and save a ticket
   const ticket = Ticket.build({

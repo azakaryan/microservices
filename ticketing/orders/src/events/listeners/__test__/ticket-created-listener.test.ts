@@ -1,4 +1,4 @@
-import { TicketCreatedLstener } from '../ticket-created-listener';
+import { TicketCreatedListener } from '../ticket-created-listener';
 import { natsWrapper } from '../../../nats-wrapper';
 import { Types } from 'mongoose';
 import { TicketCreatedEvent } from '@az-tickets/common';
@@ -8,7 +8,7 @@ import { Ticket } from '../../../models/ticket';
 
 const setup = async() => {
   // create an isntance of listener
-  const listener = new TicketCreatedLstener(natsWrapper.client);
+  const listener = new TicketCreatedListener(natsWrapper.client);
 
   // create a fake data of event
   const data: TicketCreatedEvent['data'] = {
