@@ -1,6 +1,9 @@
 Secrets managed by Kubernetes
  - jwt-secret
- - kubectl create secret generic jwt-secret --from-literal=JWT_KEY=[your secret goes here]
+    - kubectl create secret generic jwt-secret --from-literal=JWT_KEY=[your secret goes here]
+ - stripe-secret
+    - kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=[your secret goes here]
+     *NOTE you can find your stripe api Secret key here https://dashboard.stripe.com/test/apikeys
 
 Get Started Ticketing
 

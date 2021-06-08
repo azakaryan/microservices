@@ -1,10 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 
-const signin = (): string[] => {
-    // Generate random user id
-    const id = Types.ObjectId().toHexString();
-
+const signin = (id: string = Types.ObjectId().toHexString()): string[] => {
     // Build a JWT payload { id, email }.
     const payload = {
         id,
