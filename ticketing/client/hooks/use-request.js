@@ -4,10 +4,10 @@ import axios from 'axios';
 export default ({ url, method, body }) => {
     const [errors, setErrors] = useState(null);
  
-    const doRequest = async () => {
+    const doRequest = async (props = {}) => {
         try {
             setErrors(null);
-            const resp = await axios[method](url, body);
+            const resp = await axios[method](url, { ...body, ...props });
             return resp.data;
         } catch (err) {
             setErrors(
@@ -19,10 +19,10 @@ export default ({ url, method, body }) => {
                         })}
                     </ul>
                 </div>
-            )
+            );
+
+            throw err;
         }
-        
-        throw err;
     };
 
     return { doRequest, errors };
