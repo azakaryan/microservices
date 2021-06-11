@@ -17,7 +17,7 @@ const start = async () => {
     }
 
     app.listen(3000, () => {
-        console.log('v1')
+        console.log('v-ci-test')
         console.log('AUTH: Listening on 3000');
     }); 
 }
