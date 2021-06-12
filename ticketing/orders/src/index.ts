@@ -42,7 +42,7 @@ const start = async () => {
     }
 
     app.listen(3000, () => {
-        console.log('v2')
+        console.log('v1')
         console.log('Ticketing: Listening on 3000');
     }); 
 }
