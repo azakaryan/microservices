@@ -14,4 +14,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # Should first connect to the cloud provide where the cluster is running.
-      # - run: kubectl apply ticketing/infra/k8s
+      # - run: kubectl apply -f ticketing/infra/k8s && kubectl apply -f ticketing/infra/k8s-prod
