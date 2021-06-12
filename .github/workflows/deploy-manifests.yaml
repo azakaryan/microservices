@@ -1,0 +1,17 @@
+name: deploy-manifests
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'ticketing/infra/**'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      # Should first connect to the cloud provide where the cluster is running.
+      # - run: kubectl apply ticketing/infra/k8s
