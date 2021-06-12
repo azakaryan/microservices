@@ -80,7 +80,7 @@ it ('do not emit an OrderCancelled event if order is already complete', async ()
   await listener.onMessage(data, msg);
 
   // verify publish is not called
-  expect(natsWrapper.client.publish).toHaveBeenCalled();
+  expect(natsWrapper.client.publish).not.toHaveBeenCalled();
 });
 
 it ('acks the message', async () => {
